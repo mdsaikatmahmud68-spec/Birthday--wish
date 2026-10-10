@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Shoot the Heart Birthday Wish</title>
+  <title>Epic Birthday Archery Game</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,46 +13,49 @@
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       min-height: 100vh;
       overflow: hidden;
+      color: #fff;
     }
 
     .game-container {
       position: relative;
       width: 100%;
-      max-width: 400px;
-      height: 600px;
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      max-width: 420px;
+      height: 650px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 25px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
       overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* Target Heart */
+    /* Floating Target Heart */
     .target-heart {
       position: absolute;
-      top: 50px;
-      font-size: 70px;
+      top: 60px;
+      font-size: 75px;
       user-select: none;
-      transition: transform 0.2s ease;
-      animation: float 2s infinite alternate ease-in-out;
+      filter: drop-shadow(0 0 15px #ff2e63);
+      animation: floatBeat 2s infinite alternate ease-in-out;
+      z-index: 1;
     }
 
-    @keyframes float {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(15px); }
+    @keyframes floatBeat {
+      0% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(10px) scale(1.08); }
+      100% { transform: translateY(20px) scale(1); }
     }
 
-    /* Canvas for Bow and Arrow */
     canvas {
       position: absolute;
       top: 0;
@@ -64,32 +67,35 @@
 
     .instruction {
       position: absolute;
-      bottom: 20px;
-      font-size: 13px;
-      color: #888;
-      font-weight: bold;
-      letter-spacing: 1px;
+      bottom: 25px;
+      font-size: 14px;
+      color: #e94560;
+      background: rgba(0,0,0,0.4);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
       z-index: 1;
-      text-align: center;
+      border: 1px solid rgba(233, 69, 96, 0.3);
     }
 
-    /* Birthday Wish Card Pop-up */
+    /* Celebration Wish Card Pop-up */
     .wish-card {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0);
       width: 85%;
-      background: #ffffff;
-      border: 3px solid #ff4b6e;
-      border-radius: 20px;
-      padding: 25px 20px;
+      background: linear-gradient(145deg, #ffffff, #fff5f7);
+      border-radius: 25px;
+      padding: 30px 20px;
       text-align: center;
-      box-shadow: 0 15px 35px rgba(255, 75, 110, 0.3);
+      box-shadow: 0 20px 60px rgba(233, 69, 96, 0.4);
       z-index: 10;
       opacity: 0;
       transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       pointer-events: none;
+      color: #333;
     }
 
     .wish-card.show {
@@ -99,26 +105,29 @@
     }
 
     .wish-card h1 {
-      color: #ff4b6e;
+      color: #e94560;
       margin: 10px 0;
       font-size: 28px;
+      font-weight: 800;
     }
 
     .wish-card p {
-      color: #444;
+      color: #555;
       font-size: 15px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .restart-btn {
-      margin-top: 15px;
-      background: #ff4b6e;
+      margin-top: 18px;
+      background: linear-gradient(45deg, #ff2e63, #e94560);
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
+      padding: 12px 25px;
+      border-radius: 25px;
       font-weight: bold;
+      font-size: 14px;
       cursor: pointer;
+      box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
     }
   </style>
 </head>
@@ -127,12 +136,12 @@
   <div class="game-container">
     <div class="target-heart" id="targetHeart">💖</div>
     <canvas id="gameCanvas"></canvas>
-    <div class="instruction">🏹 তীরটি টেনে ধরে হার্টের দিকে তাক করে ছেড়ে দিন!</div>
+    <div class="instruction">🏹 তীরটি টেনে ধরে হার্টের দিকে লক্ষ্য করে ছেড়ে দিন!</div>
 
     <div class="wish-card" id="wishCard">
-      <div style="font-size: 50px;">🎉🎂</div>
+      <div style="font-size: 60px;">🎉🎂✨</div>
       <h1>Happy Birthday!</h1>
-      <p>আপনার শুভ জন্মদিনে অনেক অনেক ভালোবাসা ও শুভেচ্ছা! আজকের দিনটি অনেক আনন্দে কাটুক! ✨💖</p>
+      <p>আপনার বিশেষ দিনে জানাই অফুরন্ত ভালোবাসা ও অনেক শুভকামনা! প্রতিটি দিন কাটুক সাফল্য ও হাসিতে! 💖🎈</p>
       <button class="restart-btn" onclick="resetGame()">আবার খেলুন 🏹</button>
     </div>
   </div>
@@ -149,8 +158,8 @@
     }
     resizeCanvas();
 
-    // Game Variables
-    const bowPos = { x: canvas.width / 2, y: canvas.height - 100 };
+    // Bow & Arrow Config
+    const bowPos = { x: canvas.width / 2, y: canvas.height - 110 };
     let arrowPos = { x: bowPos.x, y: bowPos.y };
     let isDragging = false;
     let dragPos = { x: bowPos.x, y: bowPos.y };
@@ -158,7 +167,25 @@
     let isFired = false;
     let isHit = false;
 
-    // Get Target Position
+    // Particle Effect Array
+    let particles = [];
+
+    function createConfetti(x, y) {
+      const colors = ['#ff2e63', '#08d9d6', '#ffde7d', '#fce38a', '#ff6bcb'];
+      for (let i = 0; i < 60; i++) {
+        particles.push({
+          x: x,
+          y: y,
+          vx: (Math.random() - 0.5) * 12,
+          vy: (Math.random() - 0.7) * 12,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          gravity: 0.2
+        });
+      }
+    }
+
     function getTargetRect() {
       const rect = targetHeart.getBoundingClientRect();
       const containerRect = canvas.getBoundingClientRect();
@@ -169,22 +196,17 @@
       };
     }
 
-    // Touch / Mouse Events
     function getEventPos(e) {
       const rect = canvas.getBoundingClientRect();
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      return {
-        x: clientX - rect.left,
-        y: clientY - rect.top
-      };
+      return { x: clientX - rect.left, y: clientY - rect.top };
     }
 
     function startDrag(e) {
       if (isFired || isHit) return;
       const pos = getEventPos(e);
-      const dist = Math.hypot(pos.x - bowPos.x, pos.y - bowPos.y);
-      if (dist < 60) {
+      if (Math.hypot(pos.x - bowPos.x, pos.y - bowPos.y) < 70) {
         isDragging = true;
         dragPos = pos;
       }
@@ -193,8 +215,7 @@
     function moveDrag(e) {
       if (!isDragging) return;
       dragPos = getEventPos(e);
-      // Limit pull distance
-      const maxPull = 100;
+      const maxPull = 90;
       const dx = dragPos.x - bowPos.x;
       const dy = dragPos.y - bowPos.y;
       const dist = Math.hypot(dx, dy);
@@ -210,7 +231,7 @@
       isFired = true;
       const dx = bowPos.x - dragPos.x;
       const dy = bowPos.y - dragPos.y;
-      arrowVelocity = { x: dx * 0.25, y: dy * 0.25 };
+      arrowVelocity = { x: dx * 0.28, y: dy * 0.28 };
     }
 
     canvas.addEventListener('mousedown', startDrag);
@@ -221,44 +242,51 @@
     canvas.addEventListener('touchmove', moveDrag);
     window.addEventListener('touchend', endDrag);
 
-    // Update & Render
     function update() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      // Draw Aim Line
+      if (isDragging) {
+        ctx.beginPath();
+        ctx.moveTo(bowPos.x, bowPos.y);
+        ctx.lineTo(bowPos.x + (bowPos.x - dragPos.x) * 2, bowPos.y + (bowPos.y - dragPos.y) * 2);
+        ctx.setLineDash([5, 5]);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
       // Draw Bow
       ctx.beginPath();
-      ctx.arc(bowPos.x, bowPos.y, 40, Math.PI * 0.2, Math.PI * 0.8, false);
-      ctx.strokeStyle = '#8d6e63';
-      ctx.lineWidth = 6;
+      ctx.arc(bowPos.x, bowPos.y, 45, Math.PI * 0.15, Math.PI * 0.85, false);
+      ctx.strokeStyle = '#e94560';
+      ctx.lineWidth = 7;
       ctx.stroke();
 
-      // Draw Bow String & Arrow
+      // String & Arrow
       if (!isFired) {
         const pullX = isDragging ? dragPos.x : bowPos.x;
         const pullY = isDragging ? dragPos.y : bowPos.y;
 
-        // String
         ctx.beginPath();
-        ctx.moveTo(bowPos.x - 35, bowPos.y + 15);
+        ctx.moveTo(bowPos.x - 40, bowPos.y + 10);
         ctx.lineTo(pullX, pullY);
-        ctx.lineTo(bowPos.x + 35, bowPos.y + 15);
-        ctx.strokeStyle = '#555';
-        ctx.lineWidth = 2;
+        ctx.lineTo(bowPos.x + 40, bowPos.y + 10);
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.5;
         ctx.stroke();
 
-        // Arrow Body
         const angle = Math.atan2(bowPos.y - pullY, bowPos.x - pullX);
         drawArrow(pullX, pullY, angle);
       } else {
-        // String resting
         ctx.beginPath();
-        ctx.moveTo(bowPos.x - 35, bowPos.y + 15);
-        ctx.lineTo(bowPos.x + 35, bowPos.y + 15);
-        ctx.strokeStyle = '#555';
-        ctx.lineWidth = 2;
+        ctx.moveTo(bowPos.x - 40, bowPos.y + 10);
+        ctx.lineTo(bowPos.x + 40, bowPos.y + 10);
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.5;
         ctx.stroke();
 
-        // Arrow Moving
         if (!isHit) {
           arrowPos.x += arrowVelocity.x;
           arrowPos.y += arrowVelocity.y;
@@ -266,23 +294,40 @@
           const angle = Math.atan2(arrowVelocity.y, arrowVelocity.x);
           drawArrow(arrowPos.x, arrowPos.y, angle);
 
-          // Check Collision
           const target = getTargetRect();
-          const distToTarget = Math.hypot(arrowPos.x - target.x, arrowPos.y - target.y);
-          if (distToTarget < target.radius) {
+          if (Math.hypot(arrowPos.x - target.x, arrowPos.y - target.y) < target.radius) {
             isHit = true;
-            targetHeart.style.transform = 'scale(1.4)';
+            createConfetti(target.x, target.y);
+            targetHeart.style.transform = 'scale(1.6) rotate(15deg)';
+            targetHeart.style.opacity = '0.8';
             setTimeout(() => {
               wishCard.classList.add('show');
-            }, 300);
+            }, 500);
           }
 
-          // Reset if off-screen
           if (arrowPos.y < 0 || arrowPos.x < 0 || arrowPos.x > canvas.width || arrowPos.y > canvas.height) {
             setTimeout(resetArrow, 300);
           }
         }
       }
+
+      // Render Particles
+      particles.forEach((p, index) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.alpha -= 0.015;
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(p.alpha, 0);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        if (p.alpha <= 0) particles.splice(index, 1);
+      });
 
       requestAnimationFrame(update);
     }
@@ -292,21 +337,19 @@
       ctx.translate(x, y);
       ctx.rotate(angle);
 
-      // Arrow Shaft
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.lineTo(60, 0);
-      ctx.strokeStyle = '#3e2723';
+      ctx.lineTo(65, 0);
+      ctx.strokeStyle = '#fce38a';
       ctx.lineWidth = 4;
       ctx.stroke();
 
-      // Arrow Head
       ctx.beginPath();
-      ctx.moveTo(60, 0);
-      ctx.lineTo(45, -8);
-      ctx.lineTo(45, 8);
+      ctx.moveTo(65, 0);
+      ctx.lineTo(48, -9);
+      ctx.lineTo(48, 9);
       ctx.closePath();
-      ctx.fillStyle = '#ff4b6e';
+      ctx.fillStyle = '#ff2e63';
       ctx.fill();
 
       ctx.restore();
@@ -320,7 +363,9 @@
     function resetGame() {
       isHit = false;
       wishCard.classList.remove('show');
-      targetHeart.style.transform = 'scale(1)';
+      targetHeart.style.transform = 'none';
+      targetHeart.style.opacity = '1';
+      particles = [];
       resetArrow();
     }
 
